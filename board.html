@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한눈에 보기 · 共감 신문</title>
+<meta name="description" content="共감 신문에 실린 모든 글을 그림과 글 썸네일로 한눈에 모아 봐요.">
+<meta name="theme-color" content="#2445D6">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700;800;900&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  /* 레이아웃: 제호 → 고르기 도구 → 주별 바둑판(월~금 5칸) */
+  --paper:#F2F3EE; --card:#FBFBF8; --ink:#15212C; --muted:#5B6671; --rule:#D2D6CC;
+  --accent:#2445D6; --accent-wash:#E6EBFC;
+  --c-mon:#FFF1C7; --c-tue:#DCEFE2; --c-wed:#E3E9FC; --c-thu:#F5E2D4; --c-fri:#ECE5F7;
+  --display:"Hahmlet","Noto Serif KR","AppleMyungjo","Batang",serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+
+.mast{border-bottom:4px double var(--ink)}
+.mast-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;padding-top:26px;padding-bottom:18px}
+.brand{margin:0;display:flex;align-items:center;font-family:var(--display);font-weight:800;font-size:clamp(34px,5vw,52px);line-height:1;letter-spacing:-.03em;color:var(--ink);text-decoration:none}
+.seal{display:inline-grid;place-items:center;width:1.12em;height:1.12em;margin-right:.08em;background:var(--accent);color:#fff;border-radius:.12em;font-weight:900;font-size:.9em;transform:rotate(-5deg)}
+.page-t{margin:10px 0 0;font-family:var(--display);font-weight:700;font-size:clamp(18px,2.2vw,22px)}
+.page-t em{font-style:normal;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:8px}
+.nav a{padding:6px 12px;border:1.5px solid var(--ink);border-radius:7px;background:var(--card);color:var(--ink);font-size:14px;font-weight:700;text-decoration:none}
+.nav a:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:20px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 13px;background:var(--card);border:1.5px solid var(--ink);border-radius:999px;font-size:14px;font-weight:600;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:7px;overflow:hidden}
+.seg button{padding:5px 12px;background:var(--card);border:0;font-size:13.5px;font-weight:600;cursor:pointer}
+.seg button + button{border-left:1.5px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.sum{margin:6px 0 0;color:var(--muted);font-size:14.5px}
+.sum b{color:var(--ink)}
+
+.wk{margin:26px 0 8px}
+.wk-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;margin:0 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--ink);font-family:var(--display);font-weight:700;font-size:20px}
+.wk-h small{font-family:var(--mono);font-weight:500;font-size:12.5px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1.5px solid var(--ink);border-radius:10px;overflow:hidden;color:var(--ink);text-decoration:none;transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.thumb{position:relative;aspect-ratio:16/9;border-bottom:1.5px solid var(--ink);overflow:hidden}
+.thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.tthumb{display:flex;flex-direction:column;justify-content:space-between;height:100%;padding:12px 14px;background:var(--c)}
+.tthumb p{margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--display);font-weight:600;font-size:15px;line-height:1.45}
+.tthumb span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.cbody{display:grid;gap:6px;padding:11px 13px 14px}
+.kick{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.corner{font-family:var(--body);font-weight:700;font-size:11.5px;color:#fff;background:var(--accent);padding:1px 7px;border-radius:3px}
+.today{font-family:var(--body);font-weight:700;color:var(--accent)}
+.ttl{margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--display);font-weight:700;font-size:16.5px;line-height:1.38;letter-spacing:-.01em}
+.done{position:absolute;top:8px;right:8px;display:grid;place-items:center;width:28px;height:28px;background:var(--card);border:2px solid var(--accent);color:var(--accent);border-radius:6px;font-family:var(--display);font-weight:900;font-size:15px;transform:rotate(-8deg)}
+.state{padding:60px 0 90px;color:var(--muted);font-size:17px}
+.state b{display:block;margin-bottom:6px;font-family:var(--display);font-size:22px;color:var(--ink)}
+.footer{margin-top:40px;padding:22px 0 36px;border-top:1.5px solid var(--ink);font-size:13.5px;color:var(--muted)}
+
+@media (max-width:1100px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:640px){
+  .wrap{padding-left:16px;padding-right:16px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .ttl{font-size:15px}
+  .cbody{padding:9px 10px 12px}
+  .tthumb{padding:9px 10px}
+  .tthumb p{font-size:13px;-webkit-line-clamp:3}
+}
+@media (prefers-reduced-motion:reduce){ .card{transition:none} }
+@media print{
+  .tools,.nav,.footer{display:none!important}
+  body,html{background:#fff}
+  .card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap mast-top">
+    <div>
+      <a class="brand" href="index.html" aria-label="공감 신문 처음 화면"><span class="seal" aria-hidden="true">共</span><span aria-hidden="true">감 신문</span></a>
+      <p class="page-t">모든 신문 <em>한눈에</em> 보기</p>
+    </div>
+    <nav class="nav" aria-label="다른 화면">
+      <a href="index.html">오늘의 글</a>
+      <a href="index.html#all">모든 글 목록</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tools">
+    <div class="chips" id="chips" role="group" aria-label="코너 고르기"></div>
+    <span class="seg" role="group" aria-label="썸네일"><button type="button" data-mode="img">그림으로</button><button type="button" data-mode="text">글로</button></span>
+    <span class="seg" role="group" aria-label="순서"><button type="button" data-sort="new">최신 주부터</button><button type="button" data-sort="old">처음부터</button></span>
+  </div>
+  <p class="sum" id="sum"></p>
+  <div id="board"><div class="state"><b>신문을 모으고 있어요</b>잠깐만 기다려 주세요.</div></div>
+</main>
+
+<footer class="footer"><div class="wrap">카드를 누르면 그 글을 읽고 문제를 풀 수 있어요. 共 표시는 이 기기에서 문제까지 다 푼 글이에요.</div></footer>
+
+<script>
+(function(){
+"use strict";
+const ORDER = ["mon","tue","wed","thu","fri"];
+const DAY = {mon:["월","사회·경제"], tue:["화","과학·환경"], wed:["수","디지털·미디어"], thu:["목","역사·문화"], fri:["금","생각 톺아보기"]};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const pref = Object.assign({corner:"all", mode:"img", sort:"new"}, store.get("gg6.board", {}));
+let INDEX = null, WEEKS = {};
+
+function ymd(s){ const p = s.split("-").map(Number); return new Date(p[0], p[1] - 1, p[2]); }
+function sameDay(a, b){ return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+async function getJSON(u){ const r = await fetch(u, {cache:"no-cache"}); if (!r.ok) throw new Error(u + " " + r.status); return r.json(); }
+
+function href(w, id){ return "index.html" + (w === INDEX.weeks[0] ? "" : "?week=" + encodeURIComponent(w.week)) + "#" + id; }
+function textThumb(id, iss, title){
+  return '<div class="tthumb" style="--c:var(--c-' + id + ')"><p>' + esc(iss ? iss.deck : title) + "</p><span>" + esc(DAY[id][1]) + "</span></div>";
+}
+function card(w, i, done){
+  const id = ORDER[i], iss = WEEKS[w.week] ? WEEKS[w.week].issues[i] : null;
+  const title = (w.titles || [])[i] || (iss && iss.title) || "";
+  const d = ymd(w.start); d.setDate(d.getDate() + i);
+  const no = Number.isInteger(w.first) ? "제" + (w.first + i) + "호" : "";
+  const img = iss && iss.image ? iss.image : {src:"img/" + w.week + "-" + id + ".svg", alt:""};
+  const thumb = pref.mode === "img"
+    ? '<img src="' + esc(img.src) + '" alt="" loading="lazy" width="640" height="360" data-id="' + id + '">'
+    : textThumb(id, iss, title);
+  return '<a class="card" href="' + href(w, id) + '">' +
+    '<div class="thumb">' + thumb + "</div>" +
+    '<div class="cbody"><div class="kick"><span class="corner">' + esc(DAY[id][1]) + "</span><span>" + no + " · " + (d.getMonth() + 1) + "." + d.getDate() + " " + DAY[id][0] +
+      (sameDay(d, new Date()) ? ' <b class="today">오늘</b>' : "") + "</span></div>" +
+      '<h3 class="ttl">' + esc(title) + "</h3></div>" +
+    (done[id] ? '<span class="done" title="다 풀었어요 (' + done[id].score + "/" + done[id].total + ')" aria-label="다 푼 글">共</span>' : "") +
+  "</a>";
+}
+function renderTools(){
+  const opts = [["all","전체"]].concat(ORDER.map(id => [DAY[id][1], DAY[id][0] + " · " + DAY[id][1]]));
+  $("#chips").innerHTML = opts.map(([v, t]) => '<button type="button" class="chip" data-corner="' + esc(v) + '" aria-pressed="' + (pref.corner === v) + '">' + esc(t) + "</button>").join("");
+  document.querySelectorAll("[data-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === pref.mode));
+  document.querySelectorAll("[data-sort]").forEach(b => b.setAttribute("aria-pressed", b.dataset.sort === pref.sort));
+}
+function render(){
+  renderTools();
+  const weeks = pref.sort === "old" ? INDEX.weeks.slice().reverse() : INDEX.weeks;
+  let total = 0, solved = 0, shown = 0;
+  const html = weeks.map(w => {
+    const done = store.get("gg6." + w.week + ".done", {});
+    const idx = (w.titles || []).map((_, i) => i).filter(i => pref.corner === "all" || DAY[ORDER[i]][1] === pref.corner);
+    total += (w.titles || []).length; solved += Object.keys(done).length; shown += idx.length;
+    if (!idx.length) return "";
+    const nos = Number.isInteger(w.first) ? "제" + w.first + "~" + (w.first + w.titles.length - 1) + "호" : "";
+    return '<section class="wk"><h2 class="wk-h">' + esc(w.label) + "<small>" + nos + "</small></h2>" +
+      '<div class="grid">' + idx.map(i => card(w, i, done)).join("") + "</div></section>";
+  }).join("");
+  $("#sum").innerHTML = "지금까지 실린 글 <b>" + total + "</b>편 · 이 기기에서 다 푼 글 <b>" + solved + "</b>편" + (pref.corner === "all" ? "" : " · " + esc(pref.corner) + " <b>" + shown + "</b>편");
+  $("#board").innerHTML = html || '<div class="state">조건에 맞는 글이 없어요.</div>';
+  // 그림을 못 불러오면 글 썸네일로 바꿔요
+  document.querySelectorAll(".thumb img").forEach(im => im.addEventListener("error", () => {
+    const a = im.closest(".card"), wk = a.closest(".wk"); im.outerHTML = textThumb(im.dataset.id, null, a.querySelector(".ttl").textContent);
+  }, {once:true}));
+}
+document.addEventListener("click", e => {
+  const c = e.target.closest("[data-corner]"), m = e.target.closest("[data-mode]"), s = e.target.closest("[data-sort]");
+  if (c) pref.corner = c.dataset.corner; else if (m) pref.mode = m.dataset.mode; else if (s) pref.sort = s.dataset.sort; else return;
+  store.set("gg6.board", pref); render();
+});
+async function boot(){
+  try{
+    INDEX = await getJSON("data/index.json");
+    const datas = await Promise.all(INDEX.weeks.map(w => getJSON(w.file).catch(() => null)));
+    INDEX.weeks.forEach((w, i) => { if (datas[i]) WEEKS[w.week] = datas[i]; });
+    render();
+  }catch(err){
+    console.error(err);
+    $("#board").innerHTML = '<div class="state"><b>신문을 불러오지 못했어요</b>' +
+      (location.protocol === "file:" ? "이 페이지는 웹 서버에서 열어야 해요. 배포된 주소로 접속해 주세요." : "인터넷 연결을 확인하고 새로고침해 주세요.") + "</div>";
+  }
+}
+boot();
+})();
+</script>
+</body>
+</html>

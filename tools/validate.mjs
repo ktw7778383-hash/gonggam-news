@@ -99,6 +99,14 @@ index.weeks.forEach((w, wi) => {
       err(t, `문제 유형: 4지선다 ${types.mc}개, O·X ${types.ox}개, 빈칸 ${types.blank}개 (4지선다 3개 이상, O·X·빈칸 1개 이상)`);
     if (skills.size < 4) err(t, `문제 영역이 ${skills.size}가지예요 (4가지 이상)`);
 
+    if (iss.image === undefined) warn(t, `그림이 없어요 (img/${tag}-${iss.id}.svg를 그리고 "image"를 넣어 주세요)`);
+    else {
+      const want = `img/${tag}-${iss.id}.svg`;
+      if (!iss.image || iss.image.src !== want) err(t, `image.src는 ${want} 이어야 해요`);
+      else if (!existsSync(want)) err(t, `${want} 그림 파일이 없어요`);
+      else if (!/^<svg[^>]*viewBox="0 0 640 360"/.test(readFileSync(want, "utf8"))) err(t, `${want}은 viewBox="0 0 640 360"인 SVG여야 해요`);
+      if (!iss.image || typeof iss.image.alt !== "string" || !iss.image.alt.trim()) err(t, "image.alt(그림 설명)가 비어 있어요");
+    }
     const text = [iss.title, iss.deck, iss.key, ...paras.map(b => b.p)].join(" ");
     const hasYear = /(1[0-9]{3}|20[0-9]{2})년/.test(text);
     if (iss.sources !== undefined && !Array.isArray(iss.sources)) err(t, "sources는 목록([…])이어야 해요");

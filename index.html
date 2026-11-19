@@ -269,6 +269,10 @@ button{font:inherit;color:inherit}
 #printArea{display:none}
 .mast-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px;margin-top:6px}
 .mast-tools .week-pick{margin-top:0}
+.all-btn.ghost{background:var(--card);color:var(--ink);text-decoration:none}
+.all-btn.ghost:hover{background:var(--accent);color:#fff}
+.fig{margin:0 0 26px;border:1.5px solid var(--ink);border-radius:10px;overflow:hidden;background:var(--card)}
+.fig img{display:block;width:100%;height:auto;aspect-ratio:16/9}
 .all-btn{padding:4px 11px;background:var(--ink);color:#fff;border:1.5px solid var(--ink);border-radius:6px;font-size:13.5px;font-weight:700;cursor:pointer}
 .all-btn:hover,.all-btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent)}
 /* ---------- 모든 글 목록 ---------- */
@@ -351,6 +355,7 @@ button{font:inherit;color:inherit}
         <span class="mast-sub">6학년 데일리 문해력 · 제<span id="issueNo">–</span>호</span>
         <div class="mast-tools">
           <button type="button" class="all-btn" id="allBtn" aria-pressed="false">모든 글 <span id="allCount"></span></button>
+          <a class="all-btn ghost" href="board.html">한눈에 보기</a>
           <label class="week-pick" for="weekSel">지난 호 <select id="weekSel"></select></label>
         </div>
       </div>
@@ -500,6 +505,7 @@ function renderRead(){
       '<h2 class="headline">' + esc(iss.title) + "</h2>" +
       '<p class="deck">' + esc(iss.deck) + "</p>" +
       '<div class="meta"><span>' + st.chars.toLocaleString("ko-KR") + "자</span><span>문단 " + st.paras + "개</span><span>읽는 시간 약 " + st.mins + "분</span><span>문제 " + iss.quiz.length + "개</span></div>" +
+      (iss.image ? '<figure class="fig"><img src="' + esc(iss.image.src) + '" alt="' + esc(iss.image.alt || "") + '" width="640" height="360"></figure>' : "") +
       '<div class="pre"><b>읽기 전에 생각해 보기</b><span>' + esc(iss.pre) + "</span></div>" +
       bodyHTML(iss) +
       '<aside class="key"><span class="key-label">오늘의 핵심</span><p>' + esc(iss.key) + "</p></aside>" +
