@@ -250,7 +250,7 @@ button{font:inherit;color:inherit}
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 @media print{
-  body:not(.print-sheet) :is(.days,.rail,.cta,.footer,.qside,.res-side,.week-pick){display:none!important}
+  body:not(.print-sheet) :is(.days,.rail,.cta,.footer,.qside,.res-side,.mast-tools,.chips,.list-opts,.resume){display:none!important}
   body,html{background:#fff}
   .read,.quiz{display:block;padding:0}
   .ref{position:static;max-height:none;overflow:visible;border:0}
@@ -267,7 +267,56 @@ button{font:inherit;color:inherit}
 .sources a:hover{color:var(--accent)}
 .tool .btn + .btn{margin-top:8px}
 #printArea{display:none}
-@media (max-width:560px){ .week-pick{justify-content:flex-start} }
+.mast-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px;margin-top:6px}
+.mast-tools .week-pick{margin-top:0}
+.all-btn{padding:4px 11px;background:var(--ink);color:#fff;border:1.5px solid var(--ink);border-radius:6px;font-size:13.5px;font-weight:700;cursor:pointer}
+.all-btn:hover,.all-btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent)}
+/* ---------- 모든 글 목록 ---------- */
+.list{padding-top:36px;padding-bottom:72px}
+.list-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px;margin-bottom:22px}
+.list-h{margin:12px 0 6px;font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.2;letter-spacing:-.02em}
+.list-sum{margin:0;color:var(--muted);font-size:15.5px}
+.list-sum b{color:var(--ink)}
+.resume{display:grid;gap:2px;max-width:420px;padding:14px 20px;background:var(--ink);color:#fff;border:0;border-radius:10px;text-align:left;cursor:pointer}
+.resume:hover{background:var(--accent)}
+.resume small{font-family:var(--mono);font-size:12px;opacity:.85;letter-spacing:.03em}
+.resume span{font-weight:700;font-size:16.5px;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.chip{padding:6px 13px;background:var(--card);border:1.5px solid var(--ink);border-radius:999px;font-size:14px;font-weight:600;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.list-opts{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 26px;font-size:14px;color:var(--muted)}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:7px;overflow:hidden}
+.seg button{padding:5px 12px;background:var(--card);border:0;font-size:13.5px;font-weight:600;cursor:pointer}
+.seg button + button{border-left:1.5px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.todo{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.todo input{width:17px;height:17px;accent-color:var(--accent)}
+.wk{margin:0 0 28px}
+.wk-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;margin:0;padding:6px 0 8px;border-bottom:1.5px solid var(--ink);font-family:var(--display);font-weight:700;font-size:19px}
+.wk-h small{font-family:var(--mono);font-weight:500;font-size:12.5px;color:var(--muted);letter-spacing:.02em}
+.li{margin:0;padding:0;list-style:none}
+.li-item{display:grid;grid-template-columns:62px 74px 112px minmax(0,1fr) 34px;align-items:center;gap:12px;width:100%;padding:12px 6px;background:none;border:0;border-bottom:1px solid var(--rule);border-radius:0;text-align:left;cursor:pointer}
+.li-item:hover{background:var(--card)}
+.li-item:hover .li-t{color:var(--accent)}
+.li-no{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.li-d{font-family:var(--mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.li-d b{margin-left:2px;font-family:var(--body);font-size:11px;color:var(--accent)}
+.li-c{font-size:13px;font-weight:700;color:var(--muted)}
+.li-t{font-weight:600;font-size:16.5px;line-height:1.45}
+.li-seal{display:grid;place-items:center;width:24px;height:24px;border:2px solid var(--accent);color:var(--accent);border-radius:5px;font-family:var(--display);font-weight:900;font-size:14px;line-height:1;transform:rotate(-8deg)}
+.list-empty{padding:28px 0;color:var(--muted)}
+.list-note{margin:8px 0 0;font-size:13px;color:var(--muted)}
+@media (max-width:560px){
+  .week-pick{justify-content:flex-start}
+  .mast-tools{justify-content:flex-start}
+  .list{padding-top:24px}
+  .li-item{grid-template-columns:54px minmax(0,1fr) 26px;gap:10px;padding:12px 2px}
+  .li-d,.li-c{display:none}
+  .li-t{font-size:15.5px}
+  .li-seal{width:20px;height:20px;font-size:12px;border-width:1.5px}
+  .resume{max-width:none;width:100%}
+}
 @media print{
   @page{margin:15mm}
   body.print-sheet > *:not(#printArea){display:none!important}
@@ -300,7 +349,10 @@ button{font:inherit;color:inherit}
       <div class="mast-meta">
         <span class="mast-date" id="mastDate"></span>
         <span class="mast-sub">6학년 데일리 문해력 · 제<span id="issueNo">–</span>호</span>
-        <label class="week-pick" for="weekSel">지난 호 <select id="weekSel"></select></label>
+        <div class="mast-tools">
+          <button type="button" class="all-btn" id="allBtn" aria-pressed="false">모든 글 <span id="allCount"></span></button>
+          <label class="week-pick" for="weekSel">지난 호 <select id="weekSel"></select></label>
+        </div>
       </div>
     </div>
   </div>
@@ -391,8 +443,10 @@ function corner(iss){ return iss.corner || DAY[iss.id].corner; }
 function renderMastDate(){ $("#mastDate").textContent = new Date().getFullYear() + "년 " + fmtDate(new Date()); }
 function renderDays(){
   const done = store.get(K("done"), {});
+  const inList = state.view === "list";
+  $("#allBtn").setAttribute("aria-pressed", inList);
   nav.innerHTML = ISSUES.map(iss =>
-    '<button type="button" class="day" data-id="' + iss.id + '" aria-current="' + (state.issue === iss) + '">' +
+    '<button type="button" class="day" data-id="' + iss.id + '" aria-current="' + (!inList && state.issue === iss) + '">' +
       '<span class="day-d">' + DAY[iss.id].ko + " · " + DAY[iss.id].en + "</span>" +
       '<span class="day-c">' + esc(corner(iss)).replace("·", "·<wbr>") + "</span>" +
       (isToday(iss) ? '<span class="day-today">오늘</span>' : "") +
@@ -673,7 +727,7 @@ function renderResult(){
       '<section class="echo"><label class="echo-h" for="echo">나의 <em>共</em>감 한 줄</label><p class="echo-q">' + esc(iss.echo) + "</p>" +
         '<textarea id="echo" rows="4" placeholder="내 생각을 한두 문장으로 써 보세요.">' + esc(note) + "</textarea>" +
         '<div class="row"><button type="button" class="btn primary" id="saveEcho">저장하기</button><span class="echo-s" id="echoS" role="status"></span></div></section>' +
-      '<div class="res-actions"><button type="button" class="btn primary block" id="nextIssue">다음 글 읽기 →</button><button type="button" class="btn block" id="retry">문제 다시 풀기</button><button type="button" class="btn block" id="reread">글 다시 읽기</button></div>' +
+      '<div class="res-actions"><button type="button" class="btn primary block" id="nextIssue">' + nextTarget().label + '</button><button type="button" class="btn block" id="retry">문제 다시 풀기</button><button type="button" class="btn block" id="reread">글 다시 읽기</button></div>' +
     "</aside>" +
   "</div>";
 }
@@ -729,10 +783,93 @@ function printSheet(){
   try{ window.print(); }catch(e){ done(); }
 }
 
+/* ---------- 모든 글 목록 ---------- */
+const ORDER = ["mon","tue","wed","thu","fri"];
+const listPref = Object.assign({sort:"old", corner:"all", todo:false}, store.get("gg6.list", {}));
+function saveListPref(){ store.set("gg6.list", listPref); }
+function allItems(){
+  // index.json 순서(최신 주 먼저), 주 안에서는 월→금
+  const out = [];
+  INDEX.weeks.forEach(w => {
+    const done = store.get("gg6." + w.week + ".done", {});
+    (w.titles || []).forEach((title, i) => {
+      const id = ORDER[i], d = ymd(w.start); d.setDate(d.getDate() + i);
+      out.push({w, id, title, date:d, no: Number.isInteger(w.first) ? w.first + i : null, corner: DAY[id].corner, done: done[id] || null});
+    });
+  });
+  return out;
+}
+function itemHTML(it){
+  return '<li><button type="button" class="li-item" data-go="1" data-week="' + esc(it.w.week) + '" data-id="' + it.id + '">' +
+    '<span class="li-no">' + (it.no != null ? "제" + it.no + "호" : "") + "</span>" +
+    '<span class="li-d">' + (it.date.getMonth() + 1) + "." + it.date.getDate() + " " + DAY[it.id].ko + (sameDay(it.date, new Date()) ? "<b>오늘</b>" : "") + "</span>" +
+    '<span class="li-c">' + esc(it.corner) + "</span>" +
+    '<span class="li-t">' + esc(it.title) + "</span>" +
+    '<span class="li-s">' + (it.done ? '<span class="li-seal" title="다 풀었어요 (' + it.done.score + "/" + it.done.total + ')" aria-label="다 풀었어요">共</span>' : "") + "</span>" +
+  "</button></li>";
+}
+function renderList(){
+  const items = allItems();
+  const chrono = items.slice().sort((a, b) => a.date - b.date);
+  const read = items.filter(x => x.done).length;
+  const resume = chrono.find(x => !x.done);
+  let show = listPref.sort === "old" ? chrono : items;
+  if (listPref.corner !== "all") show = show.filter(x => x.corner === listPref.corner);
+  if (listPref.todo) show = show.filter(x => !x.done);
+  const groups = [];
+  show.forEach(x => { const g = groups[groups.length - 1]; if (g && g.w === x.w) g.items.push(x); else groups.push({w:x.w, items:[x]}); });
+  const corners = [["all", "전체"]].concat(ORDER.map(id => [DAY[id].corner, DAY[id].ko + " · " + DAY[id].corner]));
+  const from = chrono.length ? (chrono[0].date.getMonth() + 1) + "월 " + chrono[0].date.getDate() + "일부터 쌓인 글" : "";
+  app.innerHTML = '<div class="wrap list">' +
+    '<div class="list-head"><div><p class="kicker"><span class="corner">모든 글</span><span>' + esc(from) + "</span></p>" +
+      '<h2 class="list-h">모든 글 목록</h2>' +
+      '<p class="list-sum">글 <b>' + items.length + "</b>편 · 문제까지 다 푼 글 <b>" + read + "</b>편</p></div>" +
+      (resume ? '<button type="button" class="resume" data-go="1" data-week="' + esc(resume.w.week) + '" data-id="' + resume.id + '"><small>이어서 읽기 · ' + (resume.no != null ? "제" + resume.no + "호" : "") + "</small><span>" + esc(resume.title) + " →</span></button>" : "") +
+    "</div>" +
+    '<div class="chips" role="group" aria-label="코너 고르기">' + corners.map(([v, t]) => '<button type="button" class="chip" data-corner="' + esc(v) + '" aria-pressed="' + (listPref.corner === v) + '">' + esc(t) + "</button>").join("") + "</div>" +
+    '<div class="list-opts"><span class="seg" role="group" aria-label="순서"><button type="button" data-sort="old" aria-pressed="' + (listPref.sort === "old") + '">처음부터</button><button type="button" data-sort="new" aria-pressed="' + (listPref.sort === "new") + '">최신 주부터</button></span>' +
+      '<label class="todo"><input type="checkbox" id="todoChk"' + (listPref.todo ? " checked" : "") + "> 아직 안 푼 글만</label></div>" +
+    (groups.length ? groups.map(g => {
+      const wd = Object.keys(store.get("gg6." + g.w.week + ".done", {})).length;
+      const nos = Number.isInteger(g.w.first) ? "제" + g.w.first + "~" + (g.w.first + 4) + "호 · " : "";
+      return '<section class="wk"><h3 class="wk-h">' + esc(g.w.label) + "<small>" + nos + "다 푼 글 " + Math.min(wd, 5) + "/5</small></h3>" +
+        '<ul class="li">' + g.items.map(itemHTML).join("") + "</ul></section>";
+    }).join("") : '<p class="list-empty">조건에 맞는 글이 없어요. 다른 코너를 골라 보세요.</p>') +
+    '<p class="list-note">‘다 푼 글’ 표시(共)는 이 기기의 브라우저에만 저장돼요.</p>' +
+  "</div>";
+}
+function showList(push){
+  stopTTS(); pauseTimer();
+  if (push !== undefined){ try{ history[push ? "pushState" : "replaceState"](null, "", location.pathname + location.search + "#all"); }catch(e){} }
+  state.view = "list"; renderDays(); render();
+  window.scrollTo({top:0, behavior:"auto"});
+}
+function urlFor(w, hash){
+  const u = new URL(location.href);
+  if (w === INDEX.weeks[0]) u.searchParams.delete("week"); else u.searchParams.set("week", w.week);
+  u.hash = hash || ""; return u.toString();
+}
+async function openFrom(week, id, push){
+  const w = INDEX.weeks.find(x => x.week === week); if (!w) return;
+  try{ history[push ? "pushState" : "replaceState"](null, "", urlFor(w, id)); }catch(e){}
+  try{
+    if (WEEK.week !== w.week) await loadWeek(w, id); else openIssue(id);
+    window.scrollTo({top:0, behavior:"auto"});
+  }catch(err){ console.error(err); showError(); }
+}
+function nextTarget(){
+  const i = ISSUES.indexOf(state.issue);
+  if (i < ISSUES.length - 1) return {week:WEEK.week, id:ISSUES[i + 1].id, label:"다음 글 읽기 →"};
+  const wi = INDEX.weeks.findIndex(x => x.week === WEEK.week);
+  if (wi > 0) return {week:INDEX.weeks[wi - 1].week, id:"mon", label:"다음 주 첫 글 읽기 →"};
+  return {list:true, label:"모든 글 목록 보기 →"};
+}
+
 /* ---------- 이동 ---------- */
 function render(){
   hidePop();
-  if (state.view === "quiz") renderQuiz();
+  if (state.view === "list") renderList();
+  else if (state.view === "quiz") renderQuiz();
   else if (state.view === "result") renderResult();
   else { state.view = "read"; renderRead(); }
 }
@@ -747,20 +884,38 @@ function openIssue(id){
   state.view = "read"; state.qi = 0; state.answers = []; state.readMs = 0; state.readFrom = null;
   renderDays(); render();
 }
-function hashId(){ const h = location.hash.slice(1); return DAY[h] ? h : null; }
 function setHash(id){ try{ history.replaceState(null, "", location.pathname + location.search + "#" + id); }catch(e){} }
-window.addEventListener("hashchange", () => { const id = hashId(); if (id && ISSUES.length && id !== state.issue.id){ openIssue(id); window.scrollTo(0, 0); } });
+async function route(){
+  if (!INDEX) return;
+  const want = new URLSearchParams(location.search).get("week");
+  const w = INDEX.weeks.find(x => x.week === want) || INDEX.weeks[0];
+  const h = location.hash.slice(1);
+  try{
+    if (!WEEK || WEEK.week !== w.week) await loadWeek(w, DAY[h] ? h : null, h === "all");
+    else if (h === "all"){ if (state.view === "list") return; }
+    else if (DAY[h]){ if (state.view !== "list" && state.issue.id === h) return; openIssue(h); }
+    else { if (state.view !== "list") return; openIssue(state.issue.id); }
+    if (h === "all") showList();
+    window.scrollTo(0, 0);
+  }catch(e){ console.error(e); showError(); }
+}
+let routing = Promise.resolve();
+const routeQ = () => { routing = routing.then(route); return routing; };
+window.addEventListener("hashchange", routeQ);
+window.addEventListener("popstate", routeQ);
 
 async function getJSON(url){
   const r = await fetch(url, {cache:"no-cache"});
   if (!r.ok) throw new Error(url + " " + r.status);
   return r.json();
 }
-async function loadWeek(w, preferId){
-  WEEK = await getJSON(w.file);
-  ISSUES = WEEK.issues;
+async function loadWeek(w, preferId, quiet){
+  const data = await getJSON(w.file);
+  WEEK = data; ISSUES = WEEK.issues;
   renderWeekSel();
-  openIssue(preferId && ISSUES.some(i => i.id === preferId) ? preferId : defaultId());
+  const id = preferId && ISSUES.some(i => i.id === preferId) ? preferId : defaultId();
+  if (quiet) state.issue = ISSUES.find(i => i.id === id);
+  else openIssue(id);
 }
 function showError(){
   const local = location.protocol === "file:";
@@ -772,10 +927,9 @@ async function boot(){
   renderMastDate();
   try{
     INDEX = await getJSON("data/index.json");
-    const want = new URLSearchParams(location.search).get("week");
-    const w = INDEX.weeks.find(x => x.week === want) || INDEX.weeks[0];
-    await loadWeek(w, hashId());
-  }catch(e){ console.error(e); showError(); }
+    $("#allCount").textContent = INDEX.weeks.reduce((n, w) => n + (w.titles || []).length, 0) + "편";
+  }catch(e){ console.error(e); showError(); return; }
+  await routeQ();
 }
 
 /* ---------- 이벤트 ---------- */
@@ -796,7 +950,13 @@ document.addEventListener("click", e => {
   if (!state.issue) return;
 
   const day = t.closest(".day");
-  if (day){ const id = day.dataset.id; if (id !== state.issue.id){ openIssue(id); setHash(id); } else go("read"); return; }
+  if (day){ const id = day.dataset.id; if (id !== state.issue.id || state.view === "list"){ openIssue(id); setHash(id); } else go("read"); return; }
+  const gotoBtn = t.closest("[data-go]");
+  if (gotoBtn){ openFrom(gotoBtn.dataset.week, gotoBtn.dataset.id, true); return; }
+  const chip = t.closest("[data-corner]");
+  if (chip){ listPref.corner = chip.dataset.corner; saveListPref(); renderList(); return; }
+  const sortb = t.closest("[data-sort]");
+  if (sortb){ listPref.sort = sortb.dataset.sort; saveListPref(); renderList(); return; }
 
   const sent = t.closest("#article.hl-mode .s");
   if (sent){
@@ -855,10 +1015,13 @@ document.addEventListener("click", e => {
     case "backRead": case "reread": go("read"); break;
     case "retry": state.answers = []; state.qi = 0; go("quiz"); break;
     case "nextIssue": {
-      const i = ISSUES.indexOf(state.issue), nx = ISSUES[(i + 1) % ISSUES.length].id;
-      openIssue(nx); setHash(nx); window.scrollTo(0, 0);
+      const nx = nextTarget();
+      if (nx.list) showList(true);
+      else if (nx.week === WEEK.week){ openIssue(nx.id); setHash(nx.id); window.scrollTo(0, 0); }
+      else openFrom(nx.week, nx.id, false);
       break;
     }
+    case "allBtn": if (state.view !== "list") showList(true); break;
     case "saveEcho":
       store.set(K("note." + state.issue.id), $("#echo").value.trim());
       $("#echoS").textContent = "저장했어요";
@@ -873,6 +1036,7 @@ document.addEventListener("submit", e => {
   grade(v);
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape"){ hidePop(); closeSheet(); } });
+document.addEventListener("change", e => { if (e.target.id === "todoChk"){ listPref.todo = e.target.checked; saveListPref(); renderList(); } });
 $("#sheet").addEventListener("click", e => { if (e.target.id === "sheet") closeSheet(); });
 document.addEventListener("scroll", e => { if (e.target && e.target.id === "ref") hidePop(); }, true);
 

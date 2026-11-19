@@ -99,11 +99,16 @@ index.weeks.forEach((w, wi) => {
       err(t, `문제 유형: 4지선다 ${types.mc}개, O·X ${types.ox}개, 빈칸 ${types.blank}개 (4지선다 3개 이상, O·X·빈칸 1개 이상)`);
     if (skills.size < 4) err(t, `문제 영역이 ${skills.size}가지예요 (4가지 이상)`);
 
-    if (!Array.isArray(iss.sources) || !iss.sources.length) err(t, "sources(참고한 자료)가 1개 이상 있어야 해요");
-    else iss.sources.forEach(s => { if (!s || !s.title || !/^https:\/\//.test(s.url || "")) err(t, "sources 항목은 {\"title\":…, \"url\":\"https://…\"} 형식이에요"); });
+    const text = [iss.title, iss.deck, iss.key, ...paras.map(b => b.p)].join(" ");
+    const hasYear = /(1[0-9]{3}|20[0-9]{2})년/.test(text);
+    if (iss.sources !== undefined && !Array.isArray(iss.sources)) err(t, "sources는 목록([…])이어야 해요");
+    const srcs = Array.isArray(iss.sources) ? iss.sources : [];
+    if (hasYear && !srcs.length) err(t, "연도가 나오는 글이에요. 사실을 확인한 sources(참고한 자료)를 1개 이상 넣어 주세요");
+    srcs.forEach(s => { if (!s || !s.title || !/^https:\/\//.test(s.url || "")) err(t, "sources 항목은 {\"title\":…, \"url\":\"https://…\"} 형식이에요"); });
   });
 
   data.issues.forEach((iss, k) => { if (iss.no !== data.issues[0].no + k) err(`${tag}/${iss.id}`, "호수(no)는 월요일부터 1씩 늘어나야 해요"); });
+  if (w.first !== data.issues[0].no) err(tag, `index.json의 first는 이 주 첫 호(${data.issues[0].no})여야 해요`);
   numbering.push([data.issues[0].no, data.issues[4].no, tag]);
 
   if (mc.length) {
