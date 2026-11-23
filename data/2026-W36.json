@@ -421,6 +421,13 @@
     "src": "img/2026-W36-thu.svg",
     "alt": "펼친 옛 책과 직지 글자를 새긴 금속 활자"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Jikji_pages.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Jikji_pages.jpg",
+    "alt": "1377년에 금속 활자로 찍은 『직지』의 두 쪽",
+    "credit": "사진: 프랑스 국립도서관 소장본 · 위키미디어 공용(퍼블릭 도메인)",
+    "fit": "cover"
+   },
    "body": [
     {
      "h": "한 글자씩 새겨 찍는 기술"

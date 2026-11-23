@@ -58,6 +58,8 @@ button{font:inherit;color:inherit}
 .card:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
 .thumb{position:relative;aspect-ratio:16/9;border-bottom:1.5px solid var(--ink);overflow:hidden}
 .thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.thumb img.contain{object-fit:contain;background:var(--c-thu)}
+.ph-badge{position:absolute;left:8px;bottom:8px;padding:1px 7px;background:rgba(21,33,44,.78);color:#fff;border-radius:4px;font-size:11px;font-weight:700}
 .tthumb{display:flex;flex-direction:column;justify-content:space-between;height:100%;padding:12px 14px;background:var(--c)}
 .tthumb p{margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--display);font-weight:600;font-size:15px;line-height:1.45}
 .tthumb span{font-family:var(--mono);font-size:11px;color:var(--muted)}
@@ -142,8 +144,11 @@ function card(w, i, done){
   const d = ymd(w.start); d.setDate(d.getDate() + i);
   const no = Number.isInteger(w.first) ? "제" + (w.first + i) + "호" : "";
   const img = iss && iss.image ? iss.image : {src:"img/" + w.week + "-" + id + ".svg", alt:""};
+  const ph = iss && iss.photo;
   const thumb = pref.mode === "img"
-    ? '<img src="' + esc(img.src) + '" alt="" loading="lazy" width="640" height="360" data-id="' + id + '">'
+    ? '<img src="' + esc(ph ? ph.src : img.src) + '" alt="" loading="lazy" width="640" height="360" data-id="' + id + '"' +
+      (ph ? ' data-fallback="' + esc(img.src) + '" referrerpolicy="no-referrer" class="' + (ph.fit === "contain" ? "contain" : "") + '"' : "") + ">" +
+      (ph ? '<span class="ph-badge">사진</span>' : "")
     : textThumb(id, iss, title);
   return '<a class="card" href="' + href(w, id) + '">' +
     '<div class="thumb">' + thumb + "</div>" +
@@ -175,9 +180,11 @@ function render(){
   $("#sum").innerHTML = "지금까지 실린 글 <b>" + total + "</b>편 · 이 기기에서 다 푼 글 <b>" + solved + "</b>편" + (pref.corner === "all" ? "" : " · " + esc(pref.corner) + " <b>" + shown + "</b>편");
   $("#board").innerHTML = html || '<div class="state">조건에 맞는 글이 없어요.</div>';
   // 그림을 못 불러오면 글 썸네일로 바꿔요
-  document.querySelectorAll(".thumb img").forEach(im => im.addEventListener("error", () => {
-    const a = im.closest(".card"), wk = a.closest(".wk"); im.outerHTML = textThumb(im.dataset.id, null, a.querySelector(".ttl").textContent);
-  }, {once:true}));
+  document.querySelectorAll(".thumb img").forEach(im => im.addEventListener("error", function onErr(){
+    if (im.dataset.fallback){ const fb = im.dataset.fallback; delete im.dataset.fallback; im.classList.remove("contain"); const badge = im.parentNode.querySelector(".ph-badge"); if (badge) badge.remove(); im.src = fb; return; }
+    im.removeEventListener("error", onErr);
+    const a = im.closest(".card"); im.outerHTML = textThumb(im.dataset.id, null, a.querySelector(".ttl").textContent);
+  }));
 }
 document.addEventListener("click", e => {
   const c = e.target.closest("[data-corner]"), m = e.target.closest("[data-mode]"), s = e.target.closest("[data-sort]");

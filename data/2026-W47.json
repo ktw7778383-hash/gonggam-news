@@ -151,6 +151,13 @@
     "src": "img/2026-W47-tue.svg",
     "alt": "꽃가루를 옮기는 꿀벌과 활짝 핀 꽃"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Apis_mellifera_2_Luc_Viatour.JPG?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Apis_mellifera_2_Luc_Viatour.JPG",
+    "alt": "라벤더꽃에서 꿀을 모으는 꿀벌",
+    "credit": "사진: Luc Viatour · 위키미디어 공용(CC 이용 허락)",
+    "fit": "cover"
+   },
    "body": [
     {
      "h": "꽃에서 꽃으로, 바쁜 배달부"
@@ -421,6 +428,13 @@
    "image": {
     "src": "img/2026-W47-thu.svg",
     "alt": "소리 나는 모양을 본뜬 훈민정음 자음과 모음"
+   },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Hunminjeongeum_Haerye_03.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Hunminjeongeum_Haerye_03.jpg",
+    "alt": "『훈민정음』 해례본",
+    "credit": "사진: 간송미술관 소장본 · 위키미디어 공용(퍼블릭 도메인)",
+    "fit": "contain"
    },
    "body": [
     {

@@ -19,6 +19,7 @@ favicon.svg
 data/index.json     주 목록 (최신 주가 맨 앞)
 data/2026-W36.json  주별 글 5편과 문제 (9월 첫 주 W36부터 한 주에 한 파일)
 tools/validate.mjs  데이터 검사기
+tools/polish-svg.mjs 그림에 그림자·질감 입히기
 CONTENT_GUIDE.md    글쓰기·문제 만들기 지침
 ```
 
@@ -46,6 +47,8 @@ python3 -m http.server 8000
 학생이 푼 기록, 밑줄, 나의 共감 한 줄은 그 학생 기기의 브라우저(localStorage)에만 저장돼요. 서버로 보내지 않아요.
 
 ## 그림을 실제 사진으로 바꾸기
+
+위키미디어 공용 사진은 글 파일의 `"photo"`로 넣어요(CONTENT_GUIDE.md 7장). 직접 찍은 사진을 쓰려면 아래처럼 해요.
 
 1. 쓸 수 있는 사진(직접 찍은 사진, 공공누리·CC 등 이용이 허락된 사진)을 `img/` 폴더에 `2026-W48-mon.jpg`처럼 주-요일 이름으로 올려요.
 2. 그 주 파일(`data/2026-W48.json`)에서 해당 글의 `"image"`를 아래처럼 고쳐요. 사진은 `credit`(출처)을 꼭 적어야 검사를 통과해요.

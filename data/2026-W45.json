@@ -144,6 +144,13 @@
     "src": "img/2026-W45-tue.svg",
     "alt": "문고리를 잡는 순간 튀는 정전기 불꽃과 머리카락을 끄는 풍선"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Lightning_NOAA.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Lightning_NOAA.jpg",
+    "alt": "밤하늘을 가르는 번개",
+    "credit": "사진: C. Clark, 미국 해양대기청(NOAA) · 위키미디어 공용(퍼블릭 도메인)",
+    "fit": "cover"
+   },
    "body": [
     {
      "h": "찌릿한 겨울"

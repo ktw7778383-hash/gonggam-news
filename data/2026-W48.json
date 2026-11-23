@@ -154,6 +154,13 @@
     "src": "img/2026-W48-tue.svg",
     "alt": "여섯 갈래로 뻗은 별 모양 눈 결정과 육각형 판 모양, 바늘 모양 눈 결정"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/SnowflakesWilsonBentley.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:SnowflakesWilsonBentley.jpg",
+    "alt": "윌슨 벤틀리가 현미경으로 찍은 눈 결정들",
+    "credit": "사진: Wilson Bentley · 위키미디어 공용(퍼블릭 도메인)",
+    "fit": "contain"
+   },
    "body": [
     {
      "h": "구름 속에서 태어나는 얼음 꽃"
@@ -433,6 +440,13 @@
    "image": {
     "src": "img/2026-W48-thu.svg",
     "alt": "종이물이 담긴 통 위에서 가로세로로 흔드는 발과 차곡차곡 쌓인 한지"
+   },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Korean_paper-Hanji-02.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Korean_paper-Hanji-02.jpg",
+    "alt": "한지로 만든 작품",
+    "credit": "사진: Isaac Crumm · 위키미디어 공용(CC 이용 허락)",
+    "fit": "cover"
    },
    "body": [
     {

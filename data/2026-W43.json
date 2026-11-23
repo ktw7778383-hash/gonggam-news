@@ -14,6 +14,13 @@
     "src": "img/2026-W43-mon.svg",
     "alt": "카카오 열매와 초콜릿, 공정한 거래를 뜻하는 확인 표시"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Cacao_Tree_%28Theobroma_cacao%29_green_pods_%2817348751253%29.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Cacao_Tree_%28Theobroma_cacao%29_green_pods_%2817348751253%29.jpg",
+    "alt": "나무줄기에 달린 카카오 열매",
+    "credit": "사진: Bernard DUPONT · 위키미디어 공용(CC BY-SA)",
+    "fit": "cover"
+   },
    "body": [
     {
      "h": "초콜릿의 고향"

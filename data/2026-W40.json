@@ -139,6 +139,13 @@
     "src": "img/2026-W40-tue.svg",
     "alt": "갯벌 위 하늘을 V자로 날아가는 철새 떼"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/CanadianGeeseFlyingInVFormation.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:CanadianGeeseFlyingInVFormation.jpg",
+    "alt": "V자 모양으로 줄지어 나는 기러기 떼",
+    "credit": "사진: John Benson · 위키미디어 공용(CC 이용 허락)",
+    "fit": "cover"
+   },
    "body": [
     {
      "h": "가을 하늘을 나는 손님들"
@@ -390,6 +397,13 @@
    "image": {
     "src": "img/2026-W40-thu.svg",
     "alt": "비가 내리는 가운데 돌 받침 위에 놓인 측우기와 자"
+   },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Rain_Gauge_of_Chungcheong_Provincial_Office%2C_Gongju.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Rain_Gauge_of_Chungcheong_Provincial_Office%2C_Gongju.jpg",
+    "alt": "공주 충청감영 측우기",
+    "credit": "사진: 위키미디어 공용 · 위키미디어 공용(자유 이용)",
+    "fit": "contain"
    },
    "body": [
     {

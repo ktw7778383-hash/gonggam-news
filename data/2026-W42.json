@@ -389,6 +389,13 @@
     "src": "img/2026-W42-thu.svg",
     "alt": "사막 모래 언덕을 건너는 낙타와 비단 짐"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/KhongorynElsCamels.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:KhongorynElsCamels.jpg",
+    "alt": "고비 사막의 모래 언덕 곁을 걷는 쌍봉낙타",
+    "credit": "사진: 위키미디어 공용 · 위키미디어 공용(자유 이용)",
+    "fit": "cover"
+   },
    "body": [
     {
      "h": "동서양을 잇는 긴 길"

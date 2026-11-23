@@ -141,6 +141,13 @@
     "src": "img/2026-W46-tue.svg",
     "alt": "배추와 소금, 그리고 김치가 익어 가는 옹기"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Korean_pottery-jangdoks_in_Gangjin_Jeollanamdo%281%29.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Korean_pottery-jangdoks_in_Gangjin_Jeollanamdo%281%29.jpg",
+    "alt": "장이 익어 가는 장독대의 옹기",
+    "credit": "사진: 위키미디어 공용 · 위키미디어 공용(자유 이용)",
+    "fit": "cover"
+   },
    "body": [
     {
      "h": "겨울을 준비하는 김장"
@@ -398,6 +405,13 @@
    "image": {
     "src": "img/2026-W46-thu.svg",
     "alt": "수원 화성의 성문과 무거운 돌을 들어 올리는 거중기"
+   },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Suwon%2C_Hwaseong_Fortress.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Suwon%2C_Hwaseong_Fortress.jpg",
+    "alt": "수원 화성의 성곽",
+    "credit": "사진: Andrew Rutherford · 위키미디어 공용(CC 이용 허락)",
+    "fit": "cover"
    },
    "body": [
     {

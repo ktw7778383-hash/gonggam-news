@@ -140,6 +140,13 @@
     "src": "img/2026-W38-tue.svg",
     "alt": "밤하늘에 차례로 늘어선 삭부터 보름달까지의 달 모양"
    },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Lunar_Phases.jpg?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Lunar_Phases.jpg",
+    "alt": "한 달 동안 찍은 달의 여러 모양",
+    "credit": "사진: Hamed Rajabpour, Nariman Ghorbani · 위키미디어 공용(CC 이용 허락)",
+    "fit": "contain"
+   },
    "body": [
     {
      "h": "달은 스스로 빛나지 않아요"
@@ -399,6 +406,13 @@
    "image": {
     "src": "img/2026-W38-thu.svg",
     "alt": "들판 위에 커다란 덮개돌을 얹은 고인돌"
+   },
+   "photo": {
+    "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Gochang_Dolmen_Sites_-_3.JPG?width=960",
+    "page": "https://commons.wikimedia.org/wiki/File:Gochang_Dolmen_Sites_-_3.JPG",
+    "alt": "전북 고창의 탁자식 고인돌",
+    "credit": "사진: Kussy · 위키미디어 공용(CC 이용 허락)",
+    "fit": "cover"
    },
    "body": [
     {

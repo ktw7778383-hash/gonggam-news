@@ -78,7 +78,16 @@ button{font:inherit;color:inherit}
 .ahead{margin:0 0 18px;padding:18px 22px 4px;background:var(--accent-wash);border-left:6px solid var(--accent);border-radius:0 14px 14px 0}
 .ahead .deck{margin-bottom:14px;color:#3E4A55}
 .fig{margin:0 0 30px;background:var(--accent-wash);border:1.5px solid var(--ink);border-radius:12px;overflow:hidden}
-.fig img{display:block;width:100%;height:auto;aspect-ratio:16/9;border-bottom:1.5px solid var(--ink)}
+.fig-media{position:relative;aspect-ratio:16/9;overflow:hidden;border-bottom:1.5px solid var(--ink);background:#E9ECE4}
+.fig-media img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.fig-media img.contain{object-fit:contain;background:var(--accent-wash)}
+.fig[data-mode="photo"] .fig-art,.fig[data-mode="art"] .fig-photo{display:none}
+.fig figcaption{align-items:center;flex-wrap:wrap}
+.fig-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.fig-sw{padding:3px 10px;background:#fff;border:1.5px solid var(--accent);border-radius:999px;color:var(--accent);font-size:12.5px;font-weight:700;cursor:pointer}
+.fig-sw:hover{background:var(--accent);color:#fff}
+.fig.no-photo .fig-tools{display:none}
+.fig-credit{font-size:12px;font-weight:500;color:var(--muted);text-underline-offset:2px}
 .fig figcaption{display:flex;justify-content:space-between;gap:12px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--accent)}
 .fig figcaption small{font-weight:500;color:var(--muted)}
 .key{background:var(--accent-wash)!important;border-color:var(--accent)!important}
@@ -526,6 +535,25 @@ function sourcesHTML(iss){
     '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.title) + "</a></li>").join("") + "</ol></section>";
 }
 
+function figHTML(iss){
+  const ph = iss.photo, im = iss.image;
+  if (!ph && !im) return "";
+  const art = im ? '<img class="fig-art" src="' + esc(im.src) + '" alt="' + esc(im.alt || "") + '" width="640" height="360">' : "";
+  if (!ph) return '<figure class="fig" id="fig" data-mode="art"><div class="fig-media">' + art + '</div><figcaption><span>그림으로 먼저 살펴봐요</span>' +
+    (im.credit ? "<small>" + esc(im.credit) + "</small>" : "") + "</figcaption></figure>";
+  return '<figure class="fig" id="fig" data-mode="photo"><div class="fig-media">' +
+      '<img class="fig-photo' + (ph.fit === "contain" ? " contain" : "") + '" src="' + esc(ph.src) + '" alt="' + esc(ph.alt || "") + '" referrerpolicy="no-referrer">' + art + "</div>" +
+    '<figcaption><span class="fig-label">사진으로 먼저 살펴봐요</span><span class="fig-tools">' +
+      (im ? '<button type="button" class="fig-sw" id="figSwitch">그림으로 보기</button>' : "") +
+      '<a class="fig-credit" href="' + esc(ph.page || ph.src) + '" target="_blank" rel="noopener">' + esc(ph.credit || "사진 출처") + "</a></span></figcaption></figure>";
+}
+function wireFig(){
+  const fig = $("#fig"), ph = fig && $(".fig-photo", fig);
+  if (!ph) return;
+  const fail = () => { if (!$(".fig-art", fig)) { fig.hidden = true; return; } fig.dataset.mode = "art"; fig.classList.add("no-photo"); $(".fig-label", fig).textContent = "그림으로 먼저 살펴봐요"; };
+  ph.addEventListener("error", fail, {once:true});
+  if (ph.complete && ph.naturalWidth === 0 && ph.src) fail();
+}
 function renderRead(){
   const iss = state.issue, st = stats(iss);
   const answered = state.answers.filter(Boolean).length;
@@ -539,8 +567,7 @@ function renderRead(){
       '<p class="deck">' + esc(iss.deck) + "</p></header>" +
       '<div class="meta"><span>' + st.chars.toLocaleString("ko-KR") + "자</span><span>문단 " + st.paras + "개</span><span>읽는 시간 약 " + st.mins + "분</span><span>문제 " + iss.quiz.length + "개</span></div>" +
       '<div class="pre"><b>읽기 전에 생각해 보기</b><span>' + esc(iss.pre) + "</span></div>" +
-      (iss.image ? '<figure class="fig"><img src="' + esc(iss.image.src) + '" alt="' + esc(iss.image.alt || "") + '" width="640" height="360">' +
-        '<figcaption><span>그림으로 먼저 살펴봐요</span>' + (iss.image.credit ? "<small>" + esc(iss.image.credit) + "</small>" : "") + "</figcaption></figure>" : "") +
+      figHTML(iss) +
       bodyHTML(iss) +
       '<aside class="key"><span class="key-label">오늘의 핵심</span><p>' + esc(iss.key) + "</p></aside>" +
       '<button type="button" class="cta" id="toQuiz"><span>' + (answered && answered < iss.quiz.length ? "이어서 문제 풀기" : answered ? "결과 다시 보기" : "다 읽었으면, 문제 풀기") + "</span><small>" + iss.quiz.length + "문항 →</small></button>" +
@@ -556,6 +583,7 @@ function renderRead(){
     "</aside>" +
   "</div>";
   applyHL(app);
+  wireFig();
   startTimer();
 }
 
@@ -1045,6 +1073,13 @@ document.addEventListener("click", e => {
       break;
     case "tts": if (state.speaking) stopTTS(); else startTTS(); break;
     case "copySheet": copySheet(); break;
+    case "figSwitch": {
+      const fig = $("#fig"), toArt = fig.dataset.mode === "photo";
+      fig.dataset.mode = toArt ? "art" : "photo";
+      btn.textContent = toArt ? "사진으로 보기" : "그림으로 보기";
+      $(".fig-label", fig).textContent = toArt ? "그림으로 먼저 살펴봐요" : "사진으로 먼저 살펴봐요";
+      break;
+    }
     case "printSheet": printSheet(); break;
     case "sheetClose": closeSheet(); break;
     case "next":

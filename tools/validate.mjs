@@ -108,6 +108,13 @@ index.weeks.forEach((w, wi) => {
       else if (!src.endsWith(".svg") && !(iss.image.credit || "").trim()) err(t, "사진을 쓸 때는 image.credit(찍은 사람·출처·이용 허락)을 적어 주세요");
       if (!iss.image || typeof iss.image.alt !== "string" || !iss.image.alt.trim()) err(t, "image.alt(그림 설명)가 비어 있어요");
     }
+    if (iss.photo !== undefined) {
+      const ph = iss.photo || {};
+      if (!/^https:\/\/(commons|upload)\.wikimedia\.org\//.test(ph.src || "") && !/^img\//.test(ph.src || "")) err(t, "photo.src는 위키미디어 공용 주소(https://commons.wikimedia.org/…)나 img/ 안의 파일이어야 해요");
+      if (!(ph.credit || "").trim()) err(t, "photo.credit(사진 출처)을 적어 주세요");
+      if (!(ph.alt || "").trim()) err(t, "photo.alt(사진 설명)를 적어 주세요");
+      if (/^https/.test(ph.src || "") && !/^https:\/\//.test(ph.page || "")) err(t, "photo.page(사진 원본 페이지 주소)를 적어 주세요");
+    }
     const text = [iss.title, iss.deck, iss.key, ...paras.map(b => b.p)].join(" ");
     const hasYear = /(1[0-9]{3}|20[0-9]{2})년/.test(text);
     if (iss.sources !== undefined && !Array.isArray(iss.sources)) err(t, "sources는 목록([…])이어야 해요");

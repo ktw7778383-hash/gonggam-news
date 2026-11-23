@@ -70,6 +70,13 @@
 - 사진을 쓸 때는 이용 허락이 분명한 사진만 `img/주-요일.jpg`(또는 .png·.webp)로 넣고 `"credit"`에 출처를 적어요. 자동 업데이트에서는 SVG 그림을 그려요.
 - 글 파일의 `pre` 다음에 `"image": {"src":"img/2026-W48-mon.svg","alt":"그림 설명 한 문장"}`을 넣어요. 검사기가 파일과 형식을 확인해요.
 
+### 실제 사진 (선택)
+
+- 역사 유물, 자연, 장소처럼 사진이 도움이 되는 글은 위키미디어 공용(commons.wikimedia.org)에서 관련 사진을 찾아 `photo`로 넣어요. 사진이 있으면 화면에 사진이 먼저 보이고, ‘그림으로 보기’ 버튼으로 SVG 그림과 바꿔 볼 수 있어요. 사진을 못 불러오면 저절로 그림이 보여요.
+- 웹 검색에 `allowed_domains: commons.wikimedia.org`를 걸어 찾고, 파일 이름은 검색 결과에 나온 그대로 써요. 사람 얼굴이 크게 나온 사진, 상표·광고가 보이는 사진은 쓰지 않아요.
+- 형식: `"photo": {"src": "https://commons.wikimedia.org/wiki/Special:FilePath/파일이름?width=960", "page": "https://commons.wikimedia.org/wiki/File:파일이름", "alt": "사진 설명", "credit": "사진: 저작자 · 위키미디어 공용(이용 조건)", "fit": "cover"}` — 세로로 긴 사진이나 잘리면 안 되는 사진은 `"fit": "contain"`.
+- SVG 그림을 새로 그렸으면 `node tools/polish-svg.mjs`를 한 번 실행해 그림자와 질감을 입혀요.
+
 ## 8. 파일 형식
 
 `data/2026-W48.json`
