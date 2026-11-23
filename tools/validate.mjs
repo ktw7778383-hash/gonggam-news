@@ -57,7 +57,7 @@ index.weeks.forEach((w, wi) => {
     const paras = body.filter(b => typeof b.p === "string");
     if (paras.length < 5 || paras.length > 7) err(t, `문단이 ${paras.length}개예요 (5~7개)`);
     const chars = paras.reduce((n, b) => n + len(b.p), 0);
-    if (chars < 550 || chars > 1000) err(t, `본문이 공백 빼고 ${chars}자예요 (550~1000자)`);
+    if (chars < 400 || chars > 700) err(t, `본문이 공백 빼고 ${chars}자예요 (400~700자, 450~600자 권장)`);
     paras.forEach((b, pi) => { if (len(b.p) > 260) warn(t, `${pi + 1}문단이 ${len(b.p)}자로 길어요`); });
 
     const marked = new Set();
@@ -101,10 +101,11 @@ index.weeks.forEach((w, wi) => {
 
     if (iss.image === undefined) warn(t, `그림이 없어요 (img/${tag}-${iss.id}.svg를 그리고 "image"를 넣어 주세요)`);
     else {
-      const want = `img/${tag}-${iss.id}.svg`;
-      if (!iss.image || iss.image.src !== want) err(t, `image.src는 ${want} 이어야 해요`);
-      else if (!existsSync(want)) err(t, `${want} 그림 파일이 없어요`);
-      else if (!/^<svg[^>]*viewBox="0 0 640 360"/.test(readFileSync(want, "utf8"))) err(t, `${want}은 viewBox="0 0 640 360"인 SVG여야 해요`);
+      const src = iss.image && iss.image.src, base = `img/${tag}-${iss.id}`;
+      if (typeof src !== "string" || !new RegExp("^" + base + "\\.(svg|png|jpe?g|webp)$").test(src)) err(t, `image.src는 ${base}.svg (사진이면 .jpg·.png·.webp) 이어야 해요`);
+      else if (!existsSync(src)) err(t, `${src} 그림 파일이 없어요`);
+      else if (src.endsWith(".svg") && !/^<svg[^>]*viewBox="0 0 640 360"/.test(readFileSync(src, "utf8"))) err(t, `${src}은 viewBox="0 0 640 360"인 SVG여야 해요`);
+      else if (!src.endsWith(".svg") && !(iss.image.credit || "").trim()) err(t, "사진을 쓸 때는 image.credit(찍은 사람·출처·이용 허락)을 적어 주세요");
       if (!iss.image || typeof iss.image.alt !== "string" || !iss.image.alt.trim()) err(t, "image.alt(그림 설명)가 비어 있어요");
     }
     const text = [iss.title, iss.deck, iss.key, ...paras.map(b => b.p)].join(" ");

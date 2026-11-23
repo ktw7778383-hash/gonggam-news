@@ -62,6 +62,40 @@ button{font:inherit;color:inherit}
 .day-today{position:absolute;top:11px;right:12px;font-size:11px;font-weight:700;color:var(--accent)}
 .mini-seal{position:absolute;bottom:10px;right:12px;display:grid;place-items:center;width:24px;height:24px;border:2px solid var(--accent);color:var(--accent);border-radius:5px;font-family:var(--display);font-weight:900;font-size:14px;line-height:1;transform:rotate(-8deg)}
 
+/* ---------- 코너 색 ---------- */
+/* 요일 코너마다 색을 달리해요: 월 노랑, 화 초록, 수 파랑, 목 주황, 금 보라 */
+#app[data-c="mon"],.day[data-id="mon"]{--accent:#A86B00;--accent-wash:#FFF1C7}
+#app[data-c="tue"],.day[data-id="tue"]{--accent:#24804F;--accent-wash:#DCEFE2}
+#app[data-c="wed"],.day[data-id="wed"]{--accent:#2445D6;--accent-wash:#E3E9FC}
+#app[data-c="thu"],.day[data-id="thu"]{--accent:#BD4A2E;--accent-wash:#F7E1D5}
+#app[data-c="fri"],.day[data-id="fri"]{--accent:#7046C2;--accent-wash:#ECE5F7}
+.mast{position:relative}
+.mast::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#F2B705 0 20%,#2E8B57 20% 40%,#2445D6 40% 60%,#D2603F 60% 80%,#7B4FC9 80%)}
+.day{box-shadow:inset 0 4px 0 var(--accent)}
+.day .day-c{color:var(--accent)}
+.day[aria-current="true"]{background:var(--accent-wash)!important}
+.day[aria-current="true"]::after{background:var(--accent)!important}
+.ahead{margin:0 0 18px;padding:18px 22px 4px;background:var(--accent-wash);border-left:6px solid var(--accent);border-radius:0 14px 14px 0}
+.ahead .deck{margin-bottom:14px;color:#3E4A55}
+.fig{margin:0 0 30px;background:var(--accent-wash);border:1.5px solid var(--ink);border-radius:12px;overflow:hidden}
+.fig img{display:block;width:100%;height:auto;aspect-ratio:16/9;border-bottom:1.5px solid var(--ink)}
+.fig figcaption{display:flex;justify-content:space-between;gap:12px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--accent)}
+.fig figcaption small{font-weight:500;color:var(--muted)}
+.key{background:var(--accent-wash)!important;border-color:var(--accent)!important}
+.pre{background:var(--card)!important;border:1.5px dashed var(--accent)!important;border-left:6px solid var(--accent)!important}
+.article .term{background:linear-gradient(transparent 58%,var(--accent-wash) 58%)}
+/* 읽기 도구 상자마다 다른 색 */
+.tool.t-time{background:#FFF6D9;border-color:#EBCF7A}  .t-time .tool-h{color:#8A6400}
+.tool.t-fs{background:#E6F4EC;border-color:#A6D3B8}    .t-fs .tool-h{color:#1F6E45}
+.tool.t-tts{background:#EFE9FB;border-color:#C6B6EC}   .t-tts .tool-h{color:#5B3FA6}
+.tool.t-hl{background:#FFF8BF;border-color:#E6D35E}    .t-hl .tool-h{color:#6E5F00}
+.tool.t-vocab{background:#E7EEFF;border-color:#AFC2F3} .t-vocab .tool-h{color:#2445D6}
+.tool.t-teach{background:#FCEAE2;border-color:#EBB9A3} .t-teach .tool-h{color:#A2452A}
+.tool .tool-h{font-weight:700}
+.t-vocab .vocab button:hover{background:#fff}
+.tool .btn{background:#fff}
+.tool .btn:hover{background:var(--accent-wash)}
+
 /* ---------- 읽기 화면 ---------- */
 .read{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:56px;padding-top:40px;padding-bottom:72px;align-items:start}
 .article{max-width:740px;font-size:var(--fs)}
@@ -271,8 +305,7 @@ button{font:inherit;color:inherit}
 .mast-tools .week-pick{margin-top:0}
 .all-btn.ghost{background:var(--card);color:var(--ink);text-decoration:none}
 .all-btn.ghost:hover{background:var(--accent);color:#fff}
-.fig{margin:0 0 26px;border:1.5px solid var(--ink);border-radius:10px;overflow:hidden;background:var(--card)}
-.fig img{display:block;width:100%;height:auto;aspect-ratio:16/9}
+
 .all-btn{padding:4px 11px;background:var(--ink);color:#fff;border:1.5px solid var(--ink);border-radius:6px;font-size:13.5px;font-weight:700;cursor:pointer}
 .all-btn:hover,.all-btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent)}
 /* ---------- 모든 글 목록 ---------- */
@@ -501,24 +534,25 @@ function renderRead(){
   app.innerHTML =
   '<div class="wrap read">' +
     '<article class="article' + (state.hlMode ? " hl-mode" : "") + '" id="article" style="--fs:' + FS_STEPS[state.fsIdx] + 'px">' +
-      '<p class="kicker"><span class="corner">' + esc(corner(iss)) + "</span><span>" + fmtDate(issueDate(iss)) + " · 제" + iss.no + "호</span></p>" +
+      '<header class="ahead"><p class="kicker"><span class="corner">' + esc(corner(iss)) + "</span><span>" + fmtDate(issueDate(iss)) + " · 제" + iss.no + "호</span></p>" +
       '<h2 class="headline">' + esc(iss.title) + "</h2>" +
-      '<p class="deck">' + esc(iss.deck) + "</p>" +
+      '<p class="deck">' + esc(iss.deck) + "</p></header>" +
       '<div class="meta"><span>' + st.chars.toLocaleString("ko-KR") + "자</span><span>문단 " + st.paras + "개</span><span>읽는 시간 약 " + st.mins + "분</span><span>문제 " + iss.quiz.length + "개</span></div>" +
-      (iss.image ? '<figure class="fig"><img src="' + esc(iss.image.src) + '" alt="' + esc(iss.image.alt || "") + '" width="640" height="360"></figure>' : "") +
       '<div class="pre"><b>읽기 전에 생각해 보기</b><span>' + esc(iss.pre) + "</span></div>" +
+      (iss.image ? '<figure class="fig"><img src="' + esc(iss.image.src) + '" alt="' + esc(iss.image.alt || "") + '" width="640" height="360">' +
+        '<figcaption><span>그림으로 먼저 살펴봐요</span>' + (iss.image.credit ? "<small>" + esc(iss.image.credit) + "</small>" : "") + "</figcaption></figure>" : "") +
       bodyHTML(iss) +
       '<aside class="key"><span class="key-label">오늘의 핵심</span><p>' + esc(iss.key) + "</p></aside>" +
       '<button type="button" class="cta" id="toQuiz"><span>' + (answered && answered < iss.quiz.length ? "이어서 문제 풀기" : answered ? "결과 다시 보기" : "다 읽었으면, 문제 풀기") + "</span><small>" + iss.quiz.length + "문항 →</small></button>" +
       sourcesHTML(iss) +
     "</article>" +
     '<aside class="rail" aria-label="읽기 도구">' +
-      '<section class="tool"><h3 class="tool-h">읽은 시간</h3><div class="timer" id="timer">' + mmss(state.readMs) + '</div><p class="tool-note">문제로 넘어가면 멈춰요</p></section>' +
-      '<section class="tool"><h3 class="tool-h">글자 크기</h3><div class="row"><button type="button" class="btn" data-fs="-1" aria-label="글자 작게">가−</button><span class="fs-val" id="fsVal">' + FS_STEPS[state.fsIdx] + 'px</span><button type="button" class="btn" data-fs="1" aria-label="글자 크게">가+</button></div></section>' +
-      (hasTTS ? '<section class="tool"><h3 class="tool-h opt-h">소리로 듣기</h3><button type="button" class="btn block" id="tts" aria-pressed="false">글 읽어 주기</button><p class="tool-note">읽는 문단에 색이 칠해져요</p></section>' : "") +
-      '<section class="tool"><h3 class="tool-h opt-h">형광펜</h3><button type="button" class="btn block" id="hlBtn" aria-pressed="' + state.hlMode + '">' + (state.hlMode ? "형광펜 끄기" : "형광펜 켜기") + '</button><p class="tool-note">중요한 문장을 눌러 밑줄 긋기 · <b id="hlCount">' + hlCount() + "</b>개</p></section>" +
-      '<section class="tool tool--wide"><h3 class="tool-h">오늘의 낱말 ' + Object.keys(iss.terms).length + '개</h3><ul class="vocab">' + vocab + "</ul></section>" +
-      '<section class="tool tool--wide"><h3 class="tool-h">선생님 도구</h3><button type="button" class="btn block" id="printSheet">학습지 인쇄</button><button type="button" class="btn block" id="copySheet">학습지 글로 복사</button><p class="tool-note" id="copyNote" role="status">인쇄용 학습지에는 정답이 빠져 있어요. 복사하면 정답까지 함께 담겨요.</p></section>' +
+      '<section class="tool t-time"><h3 class="tool-h">읽은 시간</h3><div class="timer" id="timer">' + mmss(state.readMs) + '</div><p class="tool-note">문제로 넘어가면 멈춰요</p></section>' +
+      '<section class="tool t-fs"><h3 class="tool-h">글자 크기</h3><div class="row"><button type="button" class="btn" data-fs="-1" aria-label="글자 작게">가−</button><span class="fs-val" id="fsVal">' + FS_STEPS[state.fsIdx] + 'px</span><button type="button" class="btn" data-fs="1" aria-label="글자 크게">가+</button></div></section>' +
+      (hasTTS ? '<section class="tool t-tts"><h3 class="tool-h opt-h">소리로 듣기</h3><button type="button" class="btn block" id="tts" aria-pressed="false">글 읽어 주기</button><p class="tool-note">읽는 문단에 색이 칠해져요</p></section>' : "") +
+      '<section class="tool t-hl"><h3 class="tool-h opt-h">형광펜</h3><button type="button" class="btn block" id="hlBtn" aria-pressed="' + state.hlMode + '">' + (state.hlMode ? "형광펜 끄기" : "형광펜 켜기") + '</button><p class="tool-note">중요한 문장을 눌러 밑줄 긋기 · <b id="hlCount">' + hlCount() + "</b>개</p></section>" +
+      '<section class="tool tool--wide t-vocab"><h3 class="tool-h">오늘의 낱말 ' + Object.keys(iss.terms).length + '개</h3><ul class="vocab">' + vocab + "</ul></section>" +
+      '<section class="tool tool--wide t-teach"><h3 class="tool-h">선생님 도구</h3><button type="button" class="btn block" id="printSheet">학습지 인쇄</button><button type="button" class="btn block" id="copySheet">학습지 글로 복사</button><p class="tool-note" id="copyNote" role="status">인쇄용 학습지에는 정답이 빠져 있어요. 복사하면 정답까지 함께 담겨요.</p></section>' +
     "</aside>" +
   "</div>";
   applyHL(app);
@@ -874,6 +908,7 @@ function nextTarget(){
 /* ---------- 이동 ---------- */
 function render(){
   hidePop();
+  app.dataset.c = state.view === "list" ? "" : state.issue.id;
   if (state.view === "list") renderList();
   else if (state.view === "quiz") renderQuiz();
   else if (state.view === "result") renderResult();
